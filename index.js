@@ -54,5 +54,6 @@ app.delete('/api/barcodes/:id', async (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
+  res.send("barcode backend")
   console.log(`Server running on http://localhost:${PORT}`);
 });
