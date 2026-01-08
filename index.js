@@ -8,7 +8,7 @@ const app = express();
 const PORT = 5000;
 
 // Connect to MongoDB
-connectDB();
+
 
 // Middleware
 app.use(cors());
@@ -18,6 +18,7 @@ app.use(express.json());
 
 // GET all barcodes
 app.get('/api/barcodes', async (req, res) => {
+  await connectDB()
   try {
     const records = await Barcode.find().sort({ createdAt: -1 });
     res.json(records);
@@ -28,6 +29,7 @@ app.get('/api/barcodes', async (req, res) => {
 
 // POST new barcode
 app.post('/api/barcodes', async (req, res) => {
+   await connectDB()
   try {
     const { productName, sku, price, salePrice, barcodeData } = req.body;
     const newRecord = new Barcode({ productName, sku, price, salePrice, barcodeData });
@@ -40,6 +42,7 @@ app.post('/api/barcodes', async (req, res) => {
 
 // DELETE barcode by id
 app.delete('/api/barcodes/:id', async (req, res) => {
+   await connectDB()
   try {
     const { id } = req.params;
     await Barcode.findByIdAndDelete(id);
